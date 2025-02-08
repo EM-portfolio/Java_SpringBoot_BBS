@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{../../css/style.css}">
+  <title>SpringBoot-bbs-</title>
+</head>
+<body>
+  <div class="title">
+    <h1>SpringBoot-bbs-</h1>
+  </div>
+  <div class="main">
+    <main>
+      <div class="bbsform">
+        <h3>書き込む</h3>
+        <form action="/save" method="post" th:object="${bbsModel}">
+          <p>名前<br><input type="text" name="name"></p>
+          <p>タイトル<br><input type="text" name="title"></p>
+          <p>メッセージ<br><textarea name="content" maxlength="250"></textarea></p>
+		  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+          <input type="submit" value="書き込む">
+        </form>
+      </div>
+      <div class="list">
+        <h3>これまでの書き込み</h3>
+        <div class="message" th:each="obj:${data}">
+          <p>お名前：<span th:text="${obj.createUser}"></span></p>
+          <p>タイトル：<span th:text="${obj.title}"></span></p>
+          <p>メッセージ:<span th:text="${obj.content}"></span></p>
+		      <p>作成日:<span th:text="${obj.createDate}"></span></p>
+          <div class="formcontainar">
+            <form action="/reply" method="get">
+              <input type="submit" value="返信">
+              <input type="hidden" name="id" th:value="${obj.id}">
+            </form>
+            <form action="/edit" method="get">
+              <input type="submit" value="編集">
+              <input type="hidden" name="id" th:value="${obj.id}">
+            </form>
+            <form action="/delete" method="post">
+              <input type="submit" value="削除">
+              <input type="hidden" name="id" th:value="${obj.id}">
+            </form>
+          </div>
+		  
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

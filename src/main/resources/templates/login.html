@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{../css/style.css}">
+  <title>SpringBoot-ログインフォーム-</title>
+</head>
+<body>
+  <div class="title">
+    <h1>SpringBoot-掲示板：ログインフォーム-</h1>
+  </div>
+  <div class="main">
+    <main id="login">
+      <form method="post" th:action="@{/login}">
+        <h3>ログインフォーム</h3>
+        <div class="loginform">
+          <div th:if="${param.error}" style="color:red">ユーザー名、またはパスワードが正しくありません。</div>
+          ユーザー名：<input type="text" name="username" placeholder="demo" autofocus="autofocus" required><br>
+          パスワード：<input type="password" name="password" placeholder="demo" required><br>
+          <button type="submit">ログイン</button>
+        </div>
+      </form>
+    </main>
+  </div>
+</body>
+</html>

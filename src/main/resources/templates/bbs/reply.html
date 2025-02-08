@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{../../css/style.css}">
+  <title>SpringBoot-bbs-</title>
+</head>
+<body>
+  <div class="title">
+    <h1>SpringBoot-bbs-</h1>
+  </div>
+  <div class="main">
+    <main>
+      <div class="bbsmessage">
+        <h3>返信元メッセージ</h3>
+		<!-- bbsModel bbsController /edit-->
+        <p>お名前: <span th:text="${bbsModel.createUser}"></span></p>
+        <p>タイトル: <span th:text="${bbsModel.title}"></span></p>
+        <p>メッセージ: <span th:text="${bbsModel.content}"></span></p>
+        <p>作成日: <span th:text="${bbsModel.createDate}"></span></p>
+      </div>
+    
+      <!-- 返信があれば表示する -->
+      <div class="list" th:if="${not #lists.isEmpty(replies)}">
+          <h3>その他の返信</h3>
+          <div th:each="reply : ${replies}">
+              <p>お名前：<span th:text="${reply.createUser}"></span></p>
+              <p>メッセージ：<span th:text="${reply.replyMessage}"></span></p>
+              <p>作成日：<span th:text="${reply.createDate}"></span></p>
+          </div>
+      </div>
+
+      <div class="replymessage">
+          <h3>返信する</h3>
+          <form action="/saveReply" method="post">
+              <p>お名前：<input type="text" name="createUser"></p>
+              <p>返信内容：<textarea name="replyMessage"></textarea></p>
+              <input type="hidden" name="bulletinBoardId" th:value="${bbsModel.id}">
+			  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+              <input id="rep" type="submit" value="返信">
+          </form>
+      </div>
+    　　<a href="/">トップページへ戻る</a>
+    </main>
+  </div>
+</body>
+</html>
